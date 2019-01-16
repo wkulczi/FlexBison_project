@@ -48,7 +48,7 @@ g++ v7.3.0
 # Uruchamianie
 
 System Linux: `make` `./output`
-System Windows (testowane przy użyciu [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10)): 
+System Windows  (testowane przy użyciu [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10)):   
 `bison -dy grammar.yy`  
 `flex lexer.ll`  
 `x86_64-w64-mingw32-gc++ lex.yy.c y.tab.c -o output.exe`  

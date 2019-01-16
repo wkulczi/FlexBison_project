@@ -39,23 +39,23 @@ Projekt zrealizowany na potrzeby zajęć z przedmiotu JFiK, [PUT Poznań](https:
 (==,!=,>,<,>=,<=) .
 
 ## Kompilacja
-Skompilowano na systemie Ubuntu 18_04 bionic beaver.
-Flex v2.6.4
-GNU Bison v3.2.3
-GNU M4 v1.4.18
-g++ v7.3.0
+Skompilowano na systemie Ubuntu 18_04 bionic beaver.  
+Flex v2.6.4  
+GNU Bison v3.2.3  
+GNU M4 v1.4.18  
+g++ v7.3.0  
 
 # Uruchamianie
 
 System Linux: `make` `./output`
 System Windows (testowane przy użyciu [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10)): 
-`bison -dy grammar.yy`
-`flex lexer.ll`
-`x86_64-w64-mingw32-gc++ lex.yy.c y.tab.c -o output.exe`
-`output.exe`
+`bison -dy grammar.yy`  
+`flex lexer.ll`  
+`x86_64-w64-mingw32-gc++ lex.yy.c y.tab.c -o output.exe`  
+`output.exe`  
 
 ## Podziękowania
-[RDD](https://rubberduckdebugging.com/cyberduck/)
-[Bisqwit](https://github.com/bisqwit/)
-[SuddenlyPineaple](https://github.com/SuddenlyPineapple)
-[Evenlaxxus](https://github.com/Evenlaxxus)
+[RDD](https://rubberduckdebugging.com/cyberduck/)  
+[Bisqwit](https://github.com/bisqwit/)  
+[SuddenlyPineaple](https://github.com/SuddenlyPineapple)  
+[Evenlaxxus](https://github.com/Evenlaxxus)  

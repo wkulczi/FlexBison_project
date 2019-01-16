@@ -1,0 +1,5 @@
+all:
+	bison grammar.yy -o grammar.cc
+	flex lexer.ll
+	g++ -std=c++14 grammar.cc lex.yy.c -o output
+

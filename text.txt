@@ -1,0 +1,10 @@
+a=5;
+b=3;
+PRINT a+b+3;
+a=a+1;
+b=b+a;
+PRINT a+b+3;
+IF a>b a=a+1;
+a=10;
+b=2;
+WHILE a a=a−1 b=b+b;

@@ -1,0 +1,504 @@
+Terminals unused in grammar
+
+   UNK
+
+
+Grammar
+
+    0 $accept: LIBRARY $end
+
+    1 LIBRARY: LIBRARY FUNCTIONS ';'
+    2        | LIBRARY FUNCTIONS
+    3        | LIBRARY FUNCTIONS ';' EOF
+    4        | %empty
+
+    5 FUNCTIONS: PRINT EXP
+    6          | ASSIGN
+    7          | IF COND FUNCTIONS
+    8          | WHILE VARIABLE ASSIGN FUNCTIONS
+
+    9 ASSIGN: VARIABLE PASS EXP
+
+   10 EXP: VALUE
+   11    | VARIABLE
+   12    | EXP OPERATOR VALUE
+   13    | EXP OPERATOR VARIABLE
+
+   14 COND: EXP
+   15     | EXP eq EXP
+   16     | EXP ne EXP
+   17     | EXP big EXP
+   18     | EXP smol EXP
+   19     | EXP bieq EXP
+   20     | EXP smeq EXP
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+';' (59) 1 3
+error (256)
+eq (258) 15
+ne (259) 16
+big (260) 17
+smol (261) 18
+bieq (262) 19
+smeq (263) 20
+PASS (264) 9
+WHILE (265) 8
+IF (266) 7
+UNK (267)
+PRINT (268) 5
+VARIABLE <vName> (269) 8 9 11 13
+EOF (270) 3
+VALUE <iValue> (271) 10 12
+OPERATOR <vName> (272) 12 13
+
+
+Nonterminals, with rules where they appear
+
+$accept (19)
+    on left: 0
+LIBRARY (20)
+    on left: 1 2 3 4, on right: 0 1 2 3
+FUNCTIONS <functions> (21)
+    on left: 5 6 7 8, on right: 1 2 3 7 8
+ASSIGN <functions> (22)
+    on left: 9, on right: 6 8
+EXP <expressions> (23)
+    on left: 10 11 12 13, on right: 5 9 12 13 14 15 16 17 18 19 20
+COND <iValue> (24)
+    on left: 14 15 16 17 18 19 20, on right: 7
+
+
+State 0
+
+    0 $accept: . LIBRARY $end
+    1 LIBRARY: . LIBRARY FUNCTIONS ';'
+    2        | . LIBRARY FUNCTIONS
+    3        | . LIBRARY FUNCTIONS ';' EOF
+    4        | . %empty
+
+    $default  reduce using rule 4 (LIBRARY)
+
+    LIBRARY  go to state 1
+
+
+State 1
+
+    0 $accept: LIBRARY . $end
+    1 LIBRARY: LIBRARY . FUNCTIONS ';'
+    2        | LIBRARY . FUNCTIONS
+    3        | LIBRARY . FUNCTIONS ';' EOF
+    5 FUNCTIONS: . PRINT EXP
+    6          | . ASSIGN
+    7          | . IF COND FUNCTIONS
+    8          | . WHILE VARIABLE ASSIGN FUNCTIONS
+    9 ASSIGN: . VARIABLE PASS EXP
+
+    $end      shift, and go to state 2
+    WHILE     shift, and go to state 3
+    IF        shift, and go to state 4
+    PRINT     shift, and go to state 5
+    VARIABLE  shift, and go to state 6
+
+    FUNCTIONS  go to state 7
+    ASSIGN     go to state 8
+
+
+State 2
+
+    0 $accept: LIBRARY $end .
+
+    $default  accept
+
+
+State 3
+
+    8 FUNCTIONS: WHILE . VARIABLE ASSIGN FUNCTIONS
+
+    VARIABLE  shift, and go to state 9
+
+
+State 4
+
+    7 FUNCTIONS: IF . COND FUNCTIONS
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   14 COND: . EXP
+   15     | . EXP eq EXP
+   16     | . EXP ne EXP
+   17     | . EXP big EXP
+   18     | . EXP smol EXP
+   19     | . EXP bieq EXP
+   20     | . EXP smeq EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP   go to state 12
+    COND  go to state 13
+
+
+State 5
+
+    5 FUNCTIONS: PRINT . EXP
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 14
+
+
+State 6
+
+    9 ASSIGN: VARIABLE . PASS EXP
+
+    PASS  shift, and go to state 15
+
+
+State 7
+
+    1 LIBRARY: LIBRARY FUNCTIONS . ';'
+    2        | LIBRARY FUNCTIONS .  [$end, WHILE, IF, PRINT, VARIABLE]
+    3        | LIBRARY FUNCTIONS . ';' EOF
+
+    ';'  shift, and go to state 16
+
+    $default  reduce using rule 2 (LIBRARY)
+
+
+State 8
+
+    6 FUNCTIONS: ASSIGN .
+
+    $default  reduce using rule 6 (FUNCTIONS)
+
+
+State 9
+
+    8 FUNCTIONS: WHILE VARIABLE . ASSIGN FUNCTIONS
+    9 ASSIGN: . VARIABLE PASS EXP
+
+    VARIABLE  shift, and go to state 6
+
+    ASSIGN  go to state 17
+
+
+State 10
+
+   11 EXP: VARIABLE .
+
+    $default  reduce using rule 11 (EXP)
+
+
+State 11
+
+   10 EXP: VALUE .
+
+    $default  reduce using rule 10 (EXP)
+
+
+State 12
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   14 COND: EXP .  [WHILE, IF, PRINT, VARIABLE]
+   15     | EXP . eq EXP
+   16     | EXP . ne EXP
+   17     | EXP . big EXP
+   18     | EXP . smol EXP
+   19     | EXP . bieq EXP
+   20     | EXP . smeq EXP
+
+    eq        shift, and go to state 18
+    ne        shift, and go to state 19
+    big       shift, and go to state 20
+    smol      shift, and go to state 21
+    bieq      shift, and go to state 22
+    smeq      shift, and go to state 23
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 14 (COND)
+
+
+State 13
+
+    5 FUNCTIONS: . PRINT EXP
+    6          | . ASSIGN
+    7          | . IF COND FUNCTIONS
+    7          | IF COND . FUNCTIONS
+    8          | . WHILE VARIABLE ASSIGN FUNCTIONS
+    9 ASSIGN: . VARIABLE PASS EXP
+
+    WHILE     shift, and go to state 3
+    IF        shift, and go to state 4
+    PRINT     shift, and go to state 5
+    VARIABLE  shift, and go to state 6
+
+    FUNCTIONS  go to state 25
+    ASSIGN     go to state 8
+
+
+State 14
+
+    5 FUNCTIONS: PRINT EXP .  [$end, WHILE, IF, PRINT, VARIABLE, ';']
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 5 (FUNCTIONS)
+
+
+State 15
+
+    9 ASSIGN: VARIABLE PASS . EXP
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 26
+
+
+State 16
+
+    1 LIBRARY: LIBRARY FUNCTIONS ';' .  [$end, WHILE, IF, PRINT, VARIABLE]
+    3        | LIBRARY FUNCTIONS ';' . EOF
+
+    EOF  shift, and go to state 27
+
+    $default  reduce using rule 1 (LIBRARY)
+
+
+State 17
+
+    5 FUNCTIONS: . PRINT EXP
+    6          | . ASSIGN
+    7          | . IF COND FUNCTIONS
+    8          | . WHILE VARIABLE ASSIGN FUNCTIONS
+    8          | WHILE VARIABLE ASSIGN . FUNCTIONS
+    9 ASSIGN: . VARIABLE PASS EXP
+
+    WHILE     shift, and go to state 3
+    IF        shift, and go to state 4
+    PRINT     shift, and go to state 5
+    VARIABLE  shift, and go to state 6
+
+    FUNCTIONS  go to state 28
+    ASSIGN     go to state 8
+
+
+State 18
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   15 COND: EXP eq . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 29
+
+
+State 19
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   16 COND: EXP ne . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 30
+
+
+State 20
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   17 COND: EXP big . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 31
+
+
+State 21
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   18 COND: EXP smol . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 32
+
+
+State 22
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   19 COND: EXP bieq . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 33
+
+
+State 23
+
+   10 EXP: . VALUE
+   11    | . VARIABLE
+   12    | . EXP OPERATOR VALUE
+   13    | . EXP OPERATOR VARIABLE
+   20 COND: EXP smeq . EXP
+
+    VARIABLE  shift, and go to state 10
+    VALUE     shift, and go to state 11
+
+    EXP  go to state 34
+
+
+State 24
+
+   12 EXP: EXP OPERATOR . VALUE
+   13    | EXP OPERATOR . VARIABLE
+
+    VARIABLE  shift, and go to state 35
+    VALUE     shift, and go to state 36
+
+
+State 25
+
+    7 FUNCTIONS: IF COND FUNCTIONS .
+
+    $default  reduce using rule 7 (FUNCTIONS)
+
+
+State 26
+
+    9 ASSIGN: VARIABLE PASS EXP .  [$end, WHILE, IF, PRINT, VARIABLE, ';']
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 9 (ASSIGN)
+
+
+State 27
+
+    3 LIBRARY: LIBRARY FUNCTIONS ';' EOF .
+
+    $default  reduce using rule 3 (LIBRARY)
+
+
+State 28
+
+    8 FUNCTIONS: WHILE VARIABLE ASSIGN FUNCTIONS .
+
+    $default  reduce using rule 8 (FUNCTIONS)
+
+
+State 29
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   15 COND: EXP eq EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 15 (COND)
+
+
+State 30
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   16 COND: EXP ne EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 16 (COND)
+
+
+State 31
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   17 COND: EXP big EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 17 (COND)
+
+
+State 32
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   18 COND: EXP smol EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 18 (COND)
+
+
+State 33
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   19 COND: EXP bieq EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 19 (COND)
+
+
+State 34
+
+   12 EXP: EXP . OPERATOR VALUE
+   13    | EXP . OPERATOR VARIABLE
+   20 COND: EXP smeq EXP .  [WHILE, IF, PRINT, VARIABLE]
+
+    OPERATOR  shift, and go to state 24
+
+    $default  reduce using rule 20 (COND)
+
+
+State 35
+
+   13 EXP: EXP OPERATOR VARIABLE .
+
+    $default  reduce using rule 13 (EXP)
+
+
+State 36
+
+   12 EXP: EXP OPERATOR VALUE .
+
+    $default  reduce using rule 12 (EXP)

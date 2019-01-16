@@ -24,7 +24,7 @@
 }
 
 %token eq ne big smol bieq smeq PASS 
-/*operator precedences where:*/
+
 %start LIBRARY
 %token WHILE IF UNK PRINT VARIABLE
 %token <iValue> VALUE
@@ -105,11 +105,11 @@ int calculate_exp(const std::vector<expression_struct>&exp)
     int res,temp1,temp2;
 
     std::stack<expression_struct> mem;
-    exp[0].variable == "" ? res = exp[0].value : res = vars_map[exp[0].variable]; //Pierwsza liczba do wyniku
+    exp[0].variable == "" ? res = exp[0].value : res = vars_map[exp[0].variable]; 
     if (exp.size()<2) return res;
     for(int i = 0; i < exp.size() - 1; i++)
     {
-        exp[i+1].variable == "" ? temp2 = exp[i+1].value : temp2 = vars_map[exp[i+1].variable]; //Pobieranie zmiennej lub odczytywanie wartosci elementu
+        exp[i+1].variable == "" ? temp2 = exp[i+1].value : temp2 = vars_map[exp[i+1].variable]; 
 
         if( order.at(exp[i].operation) >= order.at(exp[i+1].operation) ) {
             mem.empty() ? calc(res, exp[i].operation, temp2) : calc(temp1, exp[i].operation, temp2);
